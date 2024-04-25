@@ -5,7 +5,6 @@ Linux-IPC-Pipes
 # Ex03-Linux IPC - Pipes
 
 # AIM:
-
 To write a C program that illustrate communication between two process using unnamed and named pipes
 
 # DESIGN STEPS:
@@ -26,6 +25,7 @@ Testing the C Program for the desired output.
 
 ## C Program that illustrate communication between two process using unnamed pipes using Linux API system calls
 ```
+#include<stdio.h>
 #include<stdlib.h>
 #include<sys/types.h> 
 #include<sys/stat.h> 
@@ -52,7 +52,18 @@ client(p1[1],p2[0]);
 wait(waits); 
 return 0; 
 } 
-
+void client(int wfd,int rfd) {
+int i,j,n; char fname[2000];
+char buff[2000];
+printf("ENTER THE FILE NAME :");
+scanf("%s",fname);
+printf("CLIENT SENDING THE REQUEST .... PLEASE WAIT\n");
+sleep(10);
+write(wfd,fname,2000);
+n=read(rfd,buff,2000);
+buff[n]='\0';
+printf("THE RESULTS OF CLIENTS ARE ...... \n"); write(1,buff,n);
+}
 void server(int rfd,int wfd) 
 { 
 int i,j,n; 
@@ -68,28 +79,17 @@ else
 n=read(fd,buff,2000); 
 write(wfd,buff,n); 
 }
-void client(int wfd,int rfd) {
-int i,j,n; char fname[2000];
-char buff[2000];
-printf("ENTER THE FILE NAME :");
-scanf("%s",fname);
-printf("CLIENT SENDING THE REQUEST .... PLEASE WAIT\n");
-sleep(10);
-write(wfd,fname,2000);
-n=read(rfd,buff,2000);
-buff[n]='\0';
-printf("THE RESULTS OF CLIENTS ARE ...... \n"); write(1,buff,n);
-}
 ```
 
-## OUTPUT:
 
-![image](https://github.com/22008686/Linux-IPC-Pipes/assets/118916413/2b65b86e-8621-49de-bc3b-e4d4b3acfedf)
 
+
+## OUTPUT
+
+![Screenshot 2024-04-25 084709](https://github.com/SwathidoraiS/Linux-IPC-Pipes/assets/144870557/2135d001-419a-49b9-99cb-6bd45715d5a8)
 
 ## C Program that illustrate communication between two process using named pipes using Linux API system calls
 ```
-#include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/types.h>
@@ -101,10 +101,12 @@ exit(EXIT_SUCCESS);
 }
 ```
 
-## OUTPUT:
 
-![image](https://github.com/22008686/Linux-IPC-Pipes/assets/118916413/a1fcdac9-803e-4a04-8edb-d94d848e63a5)
+
+
+## OUTPUT
+![Screenshot 2024-04-25 084727](https://github.com/SwathidoraiS/Linux-IPC-Pipes/assets/144870557/a489a589-7d3e-498e-8aab-a30c1a08bb9b)
+
 
 # RESULT:
-
 The program is executed successfully.
